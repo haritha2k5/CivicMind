@@ -1,0 +1,168 @@
+/* frontend/src/App.css */
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: "Segoe UI", sans-serif;
+  background: #f0f4f8;
+  color: #1a1a2e;
+}
+
+/* ── Header ─────────────────────────────── */
+.app-header {
+  background: #0d1b2a;
+  padding: 1rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.brand-name {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #00d4e8;
+  margin-right: 0.75rem;
+}
+
+.brand-sub {
+  font-size: 0.85rem;
+  color: #7a92ab;
+}
+
+/* ── Tab navigation ─────────────────────── */
+.tab-nav {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.tab-btn {
+  padding: 0.45rem 1.1rem;
+  border: 1px solid #1e3050;
+  border-radius: 4px;
+  background: transparent;
+  color: #7a92ab;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.2s;
+}
+
+.tab-btn:hover  { border-color: #00d4e8; color: #00d4e8; }
+.tab-btn.active { background: #00d4e8; border-color: #00d4e8; color: #0d1b2a; font-weight: 600; }
+
+/* ── Main content ───────────────────────── */
+.app-main {
+  max-width: 860px;
+  margin: 2rem auto;
+  padding: 0 1.5rem;
+}
+
+/* ── Module card ────────────────────────── */
+.module-card {
+  background: #fff;
+  border-radius: 8px;
+  padding: 2rem;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  border-top: 4px solid #00d4e8;
+}
+
+.module-card h2 {
+  font-size: 1.5rem;
+  color: #0d1b2a;
+  margin-bottom: 0.3rem;
+}
+
+.subtitle {
+  color: #7a92ab;
+  font-size: 0.92rem;
+  margin-bottom: 1.2rem;
+}
+
+/* ── Inputs ─────────────────────────────── */
+textarea, input {
+  width: 100%;
+  padding: 0.7rem 0.9rem;
+  border: 1px solid #d0dce8;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  color: #1a1a2e;
+  background: #f8fbff;
+  resize: vertical;
+  margin-bottom: 1rem;
+  transition: border 0.2s;
+}
+
+textarea:focus, input:focus {
+  outline: none;
+  border-color: #00d4e8;
+}
+
+/* ── Form grid (SchemeMatch) ─────────────── */
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.8rem;
+  margin-bottom: 1rem;
+}
+
+.form-field label {
+  display: block;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #3d4f63;
+  margin-bottom: 0.3rem;
+}
+
+.form-field input { margin-bottom: 0; }
+
+/* ── Button ─────────────────────────────── */
+button {
+  padding: 0.65rem 1.8rem;
+  background: #0d1b2a;
+  color: #00d4e8;
+  border: 1px solid #00d4e8;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+button:hover:not(:disabled) { background: #00d4e8; color: #0d1b2a; }
+button:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* ── Response ───────────────────────────── */
+.response {
+  margin-top: 1.5rem;
+  padding: 1.2rem;
+  background: #f4f8fc;
+  border-left: 4px solid #00d4e8;
+  border-radius: 0 6px 6px 0;
+  font-size: 0.93rem;
+  line-height: 1.65;
+}
+
+.response > div { margin-bottom: 1rem; }
+.response strong { color: #0d1b2a; display: block; margin-bottom: 0.25rem; }
+
+/* ── Error ──────────────────────────────── */
+.error {
+  margin-top: 1rem;
+  padding: 0.75rem 1rem;
+  background: #fff0f0;
+  border-left: 4px solid #e05555;
+  color: #c0392b;
+  border-radius: 0 6px 6px 0;
+  font-size: 0.9rem;
+}
+
+/* ── Footer ─────────────────────────────── */
+.app-footer {
+  text-align: center;
+  padding: 1.2rem;
+  font-size: 0.82rem;
+  color: #9b84b8;
+  background: #0d1b2a;
+  margin-top: 3rem;
+}
