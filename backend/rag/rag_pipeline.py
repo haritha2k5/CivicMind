@@ -13,14 +13,14 @@
 
 import os
 from dotenv import load_dotenv
-from langchain_google_genai import ChatGoogleGenerativeAI
+from langchain_groq import ChatGroq
 from langchain_community.vectorstores import FAISS
-from langchain.chains import RetrievalQA
+from langchain_classic.chains import RetrievalQA
 from langchain_core.prompts import PromptTemplate
-from langchain_huggingface import HuggingFaceEmbeddings
-
+from langchain_community.embeddings import HuggingFaceEmbeddings
 
 load_dotenv()
+
 
 BASE_DIR=os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -34,11 +34,12 @@ class RAGPipeline:
         self.embeddings = HuggingFaceEmbeddings(
             model_name="all-MiniLM-L6-v2"
         )
-        self.llm = ChatGoogleGenerativeAI(
-            model="gemini-2.0-flash",  # [S3] hardcoded
-            google_api_key=os.getenv("GEMINI_API_KEY"),
+        self.llm = ChatGroq(
+            model="llama-3.1-8b-instant",  # Updated from decommissioned model
+            groq_api_key=os.getenv("GROQ_API_KEY"),
             temperature=0.3  # [S2] magic number
         )
+
         # [S7] TIGHT COUPLING — directly loads FAISS
         self.vector_store = FAISS.load_local(
             os.path.join(BASE_DIR, "data", "vector_store"),  # [S3] hardcoded path
@@ -173,5 +174,3 @@ class RAGPipeline:
 
         response = self.llm.invoke(reasoning_prompt)
         return response.content
-backend/rag/rag_pipeline.py
-
