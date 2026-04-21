@@ -77,10 +77,10 @@ def ingest_documents():
 
     # [S3] HARDCODED CONFIG — model name written inline
     embeddings = HuggingFaceEmbeddings(
-    model_name="all-MiniLM-L6-v2"
-)
+        model_name="all-MiniLM-L6-v2"
+    )
     vector_store = FAISS.from_documents(chunks, embeddings)
-   
+
     # [S3] HARDCODED CONFIG — save path inline
     vector_store.save_local("backend/data/vector_store")
     print("FAISS index saved.")
