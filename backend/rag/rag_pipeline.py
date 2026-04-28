@@ -1,25 +1,9 @@
-# ============================================================
-# VERSION 1 — rag/rag_pipeline.py
-# CODE SMELLS (Structural):
-#   [S6]  God Class       — RAGPipeline handles everything
-#   [S7]  Tight Coupling  — directly imports FAISS + LLM
-#   [S8]  Long Method     — all query methods are huge
-#   [S9]  No Interface    — no abstraction at all
-#   [S10] Duplicate Logic — retriever created in every method
-#
-# CODE SMELLS (SonarCloud-detectable):
-#   [S11] Broad Exception  — bare except in __init__
-#   [S12] Unused variable  — 'response_time' computed but unused
-#   [S13] Too many returns — multiple return paths
-#   [S14] Hard-coded creds — API key fallback hardcoded
-# ============================================================
-
 import os
 import time
 from dotenv import load_dotenv
 from langchain_groq import ChatGroq
 from langchain_community.vectorstores import FAISS
-from langchain.chains import RetrievalQA
+from langchain_classic.chains import RetrievalQA
 from langchain_core.prompts import PromptTemplate
 from langchain_huggingface import HuggingFaceEmbeddings
 
@@ -29,35 +13,31 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
 class RAGPipeline:
-    # [S6] GOD CLASS — does querying, routing, letter writing, scheme matching
 
     def __init__(self):
         try:
-            # [S7] TIGHT COUPLING — directly instantiates concrete classes
             self.embeddings = HuggingFaceEmbeddings(
-                model_name="all-MiniLM-L6-v2"  # [S3] hardcoded
+                model_name="all-MiniLM-L6-v2"  
             )
             self.llm = ChatGroq(
-                model="llama-3.1-8b-instant",   # [S3] hardcoded model
-                groq_api_key=os.getenv("GROQ_API_KEY") or "fallback-key",  # [S14] hardcoded fallback
-                temperature=0.3  # [S2] magic number
+                model="llama-3.1-8b-instant",   
+                groq_api_key=os.getenv("GROQ_API_KEY") or "fallback-key",  
+                temperature=0.3  
             )
             self.vector_store = FAISS.load_local(
-                os.path.join(BASE_DIR, "data", "vector_store"),  # [S3] hardcoded
+                os.path.join(BASE_DIR, "data", "vector_store"), 
                 self.embeddings,
                 allow_dangerous_deserialization=True
             )
-        except:  # [S11] BROAD EXCEPTION — masks all errors
+        except:  
             print("Failed to initialise RAGPipeline")
 
     def query_policy(self, question: str) -> str:
-        # [S8] LONG METHOD
-        # [S10] DUPLICATE — retriever created here and in every other method
 
-        start_time = time.time()  # [S12] computed but never used
+        start_time = time.time() 
 
         retriever = self.vector_store.as_retriever(
-            search_kwargs={"k": 5}  # [S2] magic number
+            search_kwargs={"k": 5} 
         )
 
         prompt_template = """
@@ -83,16 +63,13 @@ class RAGPipeline:
         )
 
         result = chain.invoke({"query": question})
-        response_time = time.time() - start_time  # [S12] UNUSED VARIABLE
+        response_time = time.time() - start_time 
         return result["result"]
 
     def query_grievance(self, issue: str) -> dict:
-        # [S8] LONG METHOD — 4 steps jammed into one method
-        # [S10] DUPLICATE — retriever created AGAIN
-        # [S6] GOD CLASS — grievance logic in RAGPipeline
-
+    
         retriever = self.vector_store.as_retriever(
-            search_kwargs={"k": 5}  # [S2] magic number repeated
+            search_kwargs={"k": 5}  
         )
 
         dept_prompt = f"""
@@ -136,15 +113,10 @@ class RAGPipeline:
         }
 
     def query_scheme_match(self, profile: dict) -> str:
-        # [S8] LONG METHOD
-        # [S10] DUPLICATE — retriever created a 3rd time
-        # [S6] GOD CLASS — scheme matching unrelated to RAG pipeline
 
         retriever = self.vector_store.as_retriever(
-            search_kwargs={"k": 8}  # [S2] magic number, different from above
+            search_kwargs={"k": 8} 
         )
-
-        # [S3] inline string building — no helper method
         profile_text = (
             f"Age: {profile.get('age')}, "
             f"Gender: {profile.get('gender')}, "

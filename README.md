@@ -1,5 +1,8 @@
 # CivicMind — RAG-Powered Civic Intelligence Platform
 
+> **AI Course + Software Patterns Lab Project**
+> MSc Integrated Software Systems · PSG College of Technology · 2024–25
+
 ---
 
 ## What is CivicMind?

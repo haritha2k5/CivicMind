@@ -36,7 +36,7 @@ export default function App() {
       </header>
       <main className="app-main">{current.component}</main>
       <footer className="app-footer">
-        PSG College of Technology · MSc Integrated Software Systems · AI Course Project 2024–25
+        PSG College of Technology · MSc Theoretical Computer Science · AI Course Project 2025–26
       </footer>
     </div>
   );
