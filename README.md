@@ -1,8 +1,5 @@
 # CivicMind — RAG-Powered Civic Intelligence Platform
 
-> **AI Course + Software Patterns Lab Project**
-> MSc Integrated Software Systems · PSG College of Technology · 2024–25
-
 ---
 
 ## What is CivicMind?
@@ -47,33 +44,6 @@ civicmind/
 
 ---
 
-## Design Patterns Summary (Version 2)
-
-| Pattern | Where | Purpose |
-|---|---|---|
-| **Factory** | `rag/factory/llm_factory.py` | Centralise LLM + embedding creation |
-| **Singleton** | `data/vector_store_singleton.py` | Load FAISS index only once |
-| **Adapter** | `rag/pipeline/llm_adapter.py` | Wrap Gemini behind a standard interface |
-| **Strategy** | `rag/strategies/rag_strategy.py` | Different RAG behaviour per module |
-| **Template Method** | `GrievanceStrategy` inside strategy file | Fixed 4-step grievance workflow |
-
----
-
-## Code Smells in Version 1 (for Lab Report)
-
-| Smell | File | Lines |
-|---|---|---|
-| Long Method | `ingest.py` | `ingest_documents()` — 60+ lines |
-| Magic Numbers | `ingest.py`, `rag_pipeline.py` | `1000`, `200`, `5`, `8`, `0.3` |
-| Duplicate Code | `ingest.py` | 4 near-identical folder loading blocks |
-| Hardcoded Config | Both files | Paths and model names inline |
-| God Class | `rag_pipeline.py` | `RAGPipeline` handles everything |
-| Tight Coupling | `rag_pipeline.py` | Direct FAISS + Gemini instantiation |
-| Business logic in controller | `main.py` | Validation + profile building in routes |
-| Layer bypass | `main.py` | Controller calls RAG directly, skips service |
-
----
-
 ## Setup Instructions
 
 ### Prerequisites
@@ -86,8 +56,7 @@ civicmind/
 ### Step 1 — Clone and configure
 
 ```bash
-# Work inside whichever version you want to run (v1 or v2)
-cd civicmind_v2
+cd civicmind
 
 # Add your Gemini API key to .env
 # Edit .env and replace: GEMINI_API_KEY=your_gemini_api_key_here
@@ -119,7 +88,7 @@ Sample files are already included to test with.
 ### Step 4 — Run ingestion (build FAISS index)
 
 ```bash
-# From the civicmind_v2/ root folder
+# From the civicmind/ root folder
 python -m backend.ingest
 ```
 
@@ -200,16 +169,14 @@ Frontend at: [http://localhost:5173](http://localhost:5173)
 
 ---
 
-## Running Version 1 (Smelly)
+## Running 
 
 ```bash
-cd civicmind_v1
+cd civicmind
 pip install -r requirements.txt
 python -m backend.ingest          # build index
 uvicorn backend.main:app --reload --port 8000
 ```
-
-Same frontend works for both versions.
 
 ---
 
